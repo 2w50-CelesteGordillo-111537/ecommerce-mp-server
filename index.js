@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 var cors = require("cors");
+const mongoose = require("mongoose");
+const routes = require("./routes");
 
 const port = 3001;
 
@@ -49,6 +51,12 @@ app.post("/checkout", (req, res) => {
     });
 });
 
-app.listen(port, () => {
-  console.log(`Mercado Pago app listening at http://localhost:${port}`);
-});
+mongoose
+	.connect("mongodb://localhost:27017/acmedb", { useNewUrlParser: true })
+	.then(() => {
+		app.use("/api", routes);
+
+		app.listen(port, () => {
+			console.log(`Mercado Pago app listening at http://localhost:${port}`)
+		})
+	})
