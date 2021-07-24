@@ -8,6 +8,11 @@ router.get("/orders/:idUser", async (req, res) => {
 	res.send(orders);
 });
 
+router.get("/orders", async (req, res) => {
+	const orders = await Order.find();
+	res.send(orders);
+});
+
 router.post("/orders", async (req, res) => {
 	const email = await sendEmail();
 	const order = await new Order({
